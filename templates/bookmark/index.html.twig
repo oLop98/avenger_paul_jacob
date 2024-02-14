@@ -1,0 +1,37 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Liste des Livres{% endblock %}
+
+{% block body %}
+    <div class="container">
+        <h1>Liste des Livres</h1>
+
+        {% if marquePages is not empty %}
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Nom</th>
+                        <th>Commentaire</th>
+                        <th>Date de Sortie</th>
+                        <!-- Ajoutez d'autres colonnes selon votre modèle -->
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for mpr in marquePages %}
+                        <tr>
+                            <td>{{ mpr.id }}</td>
+                            <td>{{ mpr.url }}</td>
+                            <td>{{ mpr.commentaire }}</td>
+
+                            <td>{{ mpr.dateDeCreation | date }}</td>
+                            <!-- Ajoutez d'autres colonnes selon votre modèle -->
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        {% else %}
+            <p>Aucun Livre trouvé.</p>
+        {% endif %}
+    </div>
+{% endblock %}
