@@ -1,0 +1,62 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Détails du Livre{% endblock %}
+
+{% block content %}
+    <div class="container">
+        <h1>Détails du Livre</h1>
+
+        <style>
+            .table {
+                border-width: 1px;
+                border-style: solid;
+                border-color: black;
+            }
+
+            td {
+                border-width: 1px;
+                border-style: solid;
+                border-color: black;
+                width: 50%;
+            }
+        </style>
+        
+        <a href="/" class="btn btn-primary">Accueil</a>
+        <a href="{{ path('marquepage_ajouter') }}" class="btn btn-primary">Ajouter un Livre</a>
+
+        {% if marquePage is not empty %}
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Libellé</th>
+                        <th>Valeurs</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>id</td>
+                        <td>{{ marquePage.id }}</td>
+                    </tr>
+                    <tr>
+                        <td>url</td>
+                        <td>{{ marquePage.url }}</td>
+                    </tr>
+                    <tr>
+                        <td>Date</td>
+                        <td>{{ marquePage.dateDeCreation|date }}</td>
+                    </tr>
+                    <tr>
+                        <td>commentaire</td>
+                        <td>{{ marquePage.commentaire }}</td>
+                    </tr>
+                    <tr>
+                        <td>Mots-Clés associés</td>
+                        <td>{% for mc in marquePage.getMots %}{{ mc.getMots }} {% endfor %}</td>
+                    </tr>
+                </tbody>
+            </table>
+        {% else %}
+            <p>Aucun Livre trouvé.</p>
+        {% endif %}
+    </div>
+{% endblock %}
