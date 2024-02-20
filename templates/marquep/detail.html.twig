@@ -1,13 +1,15 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Détails du Livre{% endblock %}
+
+
 
 {% block content %}
     <div class="container">
-        <h1>Détails du Livre</h1>
+        
 
         <style>
-            .table {
+            .table
+            {
                 border-width: 1px;
                 border-style: solid;
                 border-color: black;
@@ -20,7 +22,8 @@
                 width: 50%;
             }
         </style>
-        
+
+
         <a href="/" class="btn btn-primary">Accueil</a>
         <a href="{{ path('marquepage_ajouter') }}" class="btn btn-primary">Ajouter un Livre</a>
 
@@ -59,4 +62,5 @@
             <p>Aucun Livre trouvé.</p>
         {% endif %}
     </div>
+
 {% endblock %}
