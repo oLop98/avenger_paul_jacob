@@ -1,0 +1,32 @@
+{% block content %}
+    <div class="container">
+        <h2>Liste des Livres</h2>
+
+
+
+
+        {% if livres is not empty %}
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Titre</th>
+                        <th>Lien vers détail</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for livr in livres %}
+                        <tr>
+                            <td>{{ livr.titre }}</td>
+                            <td><a href="{{ path('detaillivre', {'id': livr.id}) }}" class="btn btn-primary">Voir les détails</a></td>
+
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        {% else %}
+            <p>Aucun Livre trouvé.</p>
+        {% endif %}
+        <a href="{{ path('livre_ajouter') }}" class="btn btn-primary">Aj un Livre</a>
+
+    </div>
+{% endblock %}

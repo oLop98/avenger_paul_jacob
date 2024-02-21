@@ -3,9 +3,8 @@
 
 {% block content %}
     <div class="container">
-        <h1>Liste des Livres</h1>
+        <h2>Liste des Livres</h2>
 
-        <a href="{{ path('marquepage_ajouter') }}" class="btn btn-primary">Ajouter un Livre</a>
 
 
 
@@ -36,5 +35,8 @@
         {% else %}
             <p>Aucun Livre trouvé.</p>
         {% endif %}
+        <a href="{{ path('marquepage_ajouter') }}" class="btn btn-primary">Ajouter un Marque Page</a>
+        <a href="{{ path('livre_ajouter') }}" class="btn btn-primary">Aj un Livre</a>
+
     </div>
 {% endblock %}

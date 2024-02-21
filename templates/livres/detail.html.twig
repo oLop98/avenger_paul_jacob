@@ -25,7 +25,7 @@
 
 
 
-        {% if marquePage is not empty %}
+        {% if livre is not empty %}
             <table class="table">
                 <thead>
                     <tr>
@@ -36,31 +36,24 @@
                 <tbody>
                     <tr>
                         <td>id</td>
-                        <td>{{ marquePage.id }}</td>
+                        <td>{{ livre.id }}</td>
                     </tr>
                     <tr>
-                        <td>url</td>
-                        <td>{{ marquePage.url }}</td>
+                        <td>Titre</td>
+                        <td>{{ livre.titre }}</td>
                     </tr>
                     <tr>
-                        <td>Date</td>
-                        <td>{{ marquePage.dateDeCreation|date }}</td>
+                        <td>Auteur</td>
+                        <td>{{ livre.auteur}}</td>
                     </tr>
-                    <tr>
-                        <td>commentaire</td>
-                        <td>{{ marquePage.commentaire }}</td>
-                    </tr>
-                    <tr>
-                        <td>Mots-Clés associés</td>
-                        <td>{% for mc in marquePage.getMots %}{{ mc.getMots }} {% endfor %}</td>
-                    </tr>
+
                 </tbody>
             </table>
         {% else %}
             <p>Aucun Livre trouvé.</p>
         {% endif %}
         
-        <a href="{{ path('marquepage_ajouter') }}" class="btn btn-primary">Ajouter un Livre</a>
+        <a href="{{ path('livre_ajouter') }}" class="btn btn-primary">Ajouter un Livre</a>
 
     </div>
 
