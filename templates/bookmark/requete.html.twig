@@ -1,0 +1,23 @@
+{% extends 'base.html.twig' %}
+
+
+{% block content %}
+
+<h1>Livres dont la première lettre commence par A</h1>
+<ul>
+    {% for livre in livresA %}
+        <li>{{ livre.titre }} - {{ livre.auteur }}</li>
+    {% endfor %}
+</ul>
+
+<h1>Auteurs ayant écrit plus de 5 livres</h1>
+<ul>
+    {% for auteur in auteursPlusDe5Livres %}
+        <li>{{ auteur.auteur }} avec <strong>{{ auteur.nombreLivres }}</strong> livres</li>
+    {% endfor %}
+</ul>
+
+<h1>Nombre total de livres en base</h1>
+<p>{{ totalLivres }}</p>
+
+{% endblock %}

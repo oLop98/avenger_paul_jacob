@@ -2,13 +2,13 @@
 
 namespace App\Controller;
 
-use App\Entity\Livres;
 use App\Entity\MotsCles;
 use App\Entity\MarquePage;
+use App\Repository\MarquePageRepository;
+use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Doctrine\ORM\EntityManagerInterface;
 
 class BookmarkController extends AbstractController
 {
@@ -25,39 +25,35 @@ class BookmarkController extends AbstractController
     #[Route("ajouter", name: "marquepage_ajouter")]
     public function ajouterMarquePage(EntityManagerInterface $entityManager): Response
     {
-
-        $marquePage = new MarquePage();
-        $marquePage->setUrl("https://example.com");
-        $marquePage->setCommentaire("Un commentaire");
-        $marquePage->setdateDeCreation(new \DateTime());
         
-        $motsCles = ["ZZZZ", "AAAA", "BBBB"];
 
-          
-          foreach ($motsCles as $mot) {
-            $mc = new MotsCles();
-            $mc->setMots($mot);
+        for ($i = 0; $i < 25; $i++) {
+            $marquePage = new MarquePage();
+            $marquePage->setUrl("https://example.com");
+            $marquePage->setCommentaire("Un commentaire");
+            $marquePage->setDateDeCreation(new \DateTime());
 
-            $marquePage->addMots($mc);
-            $entityManager->persist($mc);
+            $randomMotsCles = array_slice($motsClesList, 0, rand(2, 5));
+
+            foreach ($randomMotsCles as $mot) {
+                $mc = new MotsCles();
+                $mc->setMots($mot);
+
+                $marquePage->addMot($mc);
+                $entityManager->persist($mc);
+            }
+
+            $entityManager->persist($marquePage);
         }
 
-
-
-
-        
-
-        $entityManager->persist($mc);
-        $entityManager->persist($marquePage);
         $entityManager->flush();
-        
 
-
-        return new Response("Marque-page suivant ajouté avec succès :<br> l'id " . $marquePage->getId() . " <br>à la date du " . $marquePage->getdateDeCreation()->format('Y-m-d H:i:s'));
+        return new Response("Marque-pages ajoutés avec succès.");
     }
 
-    #[Route('detail/{id}', requirements: ["page"=>"\d+"], name: 'detail')]
-    public function detail(int $id, EntityManagerInterface $entityManager): Response {
+    #[Route('detail/{id}', requirements: ["id"=>"\d+"], name: 'detail')]
+    public function detail(int $id, EntityManagerInterface $entityManager): Response
+    {
         $marquePage = $entityManager->getRepository(MarquePage::class)->find($id);
 
         if (!$marquePage) {
@@ -69,14 +65,5 @@ class BookmarkController extends AbstractController
         ]);
     }
 
-    public function motscle(EntityManagerInterface $entityManager):Response
-    {
-        $motscle = new MotsCle();
-        $motscle->setIdmrp($marquePage);
-        $motscle->setMots("Un Mot Clé");
 
-    }
-
-    }
-
-
+}

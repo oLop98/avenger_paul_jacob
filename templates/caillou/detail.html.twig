@@ -1,0 +1,32 @@
+{% extends 'base.html.twig' %}
+
+
+{% block content %}
+
+{% if cayou %}
+    <h2>{{ cayou.getNomCategorie() }}</h2>
+
+    {% if photos is not empty %}
+        <div class="row">
+            {% for photo in photos %}
+                <div class="col-md-4">
+                    <div class="card">
+                        <img src="{{ photo.getPhotoUrl() }}" class="card-img-top" alt="Photo">
+                        <div class="card-body">
+                            <h5 class="card-title">Photo {{ photo.getId() }}</h5> 
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    {% else %}
+        <p>Aucune photo trouvée pour cette catégorie.</p>
+    {% endif %}
+    
+{% else %}
+    <p>Catégorie non trouvée.</p>
+{% endif %}
+
+<a href="{{ path('app_caillou') }}" class="btn btn-primary">Retour à la liste des Catégories</a>
+
+{% endblock %}
