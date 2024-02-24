@@ -17,7 +17,7 @@ class LivresRepository extends ServiceEntityRepository
         parent::__construct($registry, Livres::class);
     }
 
-    public function findByTitleStartingWith($letter)
+    public function AuteurPremiereLettre($letter)
     {
         return $this->createQueryBuilder('l')
             ->andWhere('l.titre LIKE :letter')
@@ -27,7 +27,7 @@ class LivresRepository extends ServiceEntityRepository
     }
 
 
-    public function findAuthorsWithMoreThan5Books()
+    public function AuteurNbLivre()
     {
         $entityManager = $this->getEntityManager();
 
@@ -35,7 +35,7 @@ class LivresRepository extends ServiceEntityRepository
             'SELECT m.auteur as auteur, COUNT(m.id) as nombreLivres
             FROM App\Entity\Livres m
             GROUP BY m.auteur
-            HAVING COUNT(m.id) > 0'
+            HAVING COUNT(m.id) > 3'
         );
     
         return $query->getResult();

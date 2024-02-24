@@ -58,22 +58,22 @@ class LivresController extends AbstractController
 }
 
 #[Route('/requete', name: 'requete')]
-public function livresStartingWithA(LivresRepository $LivresRepository): Response
+public function AuteurPremiereLettre(LivresRepository $LivresRepository): Response
 {
-    $livresA = $LivresRepository->findByTitleStartingWith('A');
+    $livresA = $LivresRepository->AuteurPremiereLettre('L');
 
     return $this->render('bookmark/requete.html.twig', [
         'livresA' => $livresA,
     ]);
 }
 
-#[Route('/requete-auteurs', name: 'requete_auteurs')]
-public function auteursMoreThan5Books(LivresRepository $LivresRepository): Response
+#[Route('/requete', name: 'requete')]
+public function AuteurNbLivre(LivresRepository $LivresRepository): Response
 {
-    $auteursPlusDe5Livres = $LivresRepository->findAuthorsWithMoreThan5Books();
+    $AuteurNbLivre = $LivresRepository->AuteurNbLivre();
 
     return $this->render('bookmark/requete.html.twig', [
-        'auteursPlusDe5Livres' => $auteursPlusDe5Livres,
+        'AuteurNbLivre' => $AuteurNbLivre,
     ]);
 }
 
@@ -87,16 +87,16 @@ public function totalBooks(LivresRepository $LivresRepository): Response
     ]);
 }
 
-#[Route('/caillou', name: 'app_caillou')]
+#[Route('/requete', name: 'requete')]
 public function resultat(LivresRepository $LivresRepository): Response
 {
-    $livresA = $LivresRepository->findByTitleStartingWith('L');
-    $auteursPlusDe5Livres = $LivresRepository->findAuthorsWithMoreThan5Books();
+    $livresA = $LivresRepository->AuteurPremiereLettre('L');
+    $AuteurNbLivre = $LivresRepository->AuteurNbLivre();
     $totalLivres = $LivresRepository->countBooks();
 
     return $this->render('bookmark/requete.html.twig', [
         'livresA' => $livresA,
-        'auteursPlusDe5Livres' => $auteursPlusDe5Livres,
+        'AuteurNbLivre' => $AuteurNbLivre,
         'totalLivres' => $totalLivres,
     ]);
 }
