@@ -1,23 +1,15 @@
 <?php
 
 namespace App\Controller;
+
+use App\Form\Type\AuteurType;
 use App\Form\Type\LivreType;
-
-use App\Entity\Caillou;
-use App\Entity\MarquePage;
-use App\Entity\Livres;
 use App\Entity\Auteurs;
-
-
-
 use Doctrine\ORM\EntityManagerInterface;
-use App\Repository\LivresRepository;
-use App\Repository\AuteursRepository;
-
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
-use Symfony\Component\HttpFoundation\Request;
 
 class AuteursController extends AbstractController
 {
@@ -34,7 +26,7 @@ class AuteursController extends AbstractController
             $entityManager->persist($newAuteur);
             $entityManager->flush();
     
-            return $this->redirectToRoute('auteur_succes',['auteur'=>$newAuteur]);
+            return $this->redirectToRoute('auteur_succes', ['auteur' => $newAuteur]);
         }
     
         return $this->render('auteurs/ajout.html.twig', [
@@ -43,7 +35,7 @@ class AuteursController extends AbstractController
         ]);
     }
     
-    #[Route('/contenuauteurs/{id}', requirements: ["id"=>"\d+"], name: 'contenuauteurs')]
+    #[Route('/contenuauteurs/{id}', requirements: ["id" => "\d+"], name: 'contenuauteurs')]
     public function detailAuteur(int $id, EntityManagerInterface $entityManager): Response
     {
         $auteur = $entityManager->getRepository(Auteurs::class)->find($id);
@@ -58,9 +50,8 @@ class AuteursController extends AbstractController
     }
 
     #[Route('/auteur_succes', name: 'auteur_succes')]
-public function auteurSucces(): Response
-{
-    return $this->render('auteurs/auteur_succes.html.twig');
-}
-
+    public function auteurSucces(): Response
+    {
+        return $this->render('auteurs/auteur_succes.html.twig');
+    }
 }

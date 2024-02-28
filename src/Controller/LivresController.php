@@ -3,10 +3,14 @@
 namespace App\Controller;
 
 use App\Form\Type\LivreType;
+use App\Form\Type\AuteurType;
+
 
 use App\Entity\Caillou;
 use App\Entity\MarquePage;
 use App\Entity\Livres;
+use App\Entity\Auteurs;
+
 
 use Doctrine\ORM\EntityManagerInterface;
 use App\Repository\LivresRepository;
@@ -19,12 +23,29 @@ use Symfony\Component\HttpFoundation\Request;
 class LivresController extends AbstractController
 {
     #[Route('/livres', name: 'app_livres')]
-    public function getAll(EntityManagerInterface $entityManager): Response
+    public function getAll(EntityManagerInterface $entityManager, Request $request): Response
     {
-        $livres= $entityManager->getRepository(Livres::class)->findAll();
+        $livres = $entityManager->getRepository(Livres::class)->findAll();
+        $auteurs = $entityManager->getRepository(Auteurs::class)->findAll();
+
+        $newLivre = new Livres();
+        $formLivre = $this->createForm(AuteurType::class, $newLivre, [
+            'auteurs' => $auteurs,
+        ]);
+
+        $formLivre->handleRequest($request);
+
+        if ($formLivre->isSubmitted() && $formLivre->isValid()) {
+            // Gérer la soumission du formulaire
+            $entityManager->persist($newLivre);
+            $entityManager->flush();
+
+            return $this->redirectToRoute('app_livres');
+        }
 
         return $this->render('livres/index.html.twig', [
             'livres' => $livres,
+            'formLivre' => $formLivre->createView(),
         ]);
     }
 
@@ -127,5 +148,10 @@ public function resultat(LivresRepository $LivresRepository): Response
         'totalLivres' => $totalLivres,
     ]);
 }
-
+//a modifier
+#[Route('/livre_succes', name: 'livre_succes')]
+public function auteurSucces(): Response
+{
+    return $this->render('livres/livre_succes.html.twig');
+}
 }

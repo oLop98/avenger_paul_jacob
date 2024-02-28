@@ -2,13 +2,23 @@
 
 {% block content %}
     <div class="container mt-4">
+        <h2 class="mt-4 text-center">Ajouter un nouvel auteur</h2>
+        <div class="row justify-content-center">
+            <div>
+                {{ form_start(formAuteur) }}
+                {{ form_row(formAuteur.nom)}}
+                {{ form_row(formAuteur.prenom) }}
+                <button type="submit" class="btn btn-primary">Ajouter</button>
+                {{ form_end(formAuteur) }}
+            </div>
+        </div>
         {% if auteurs is not empty %}
             <table class="table">
                 <thead>
                     <tr>
-                        <th>Prenom</th>
                         <th>Nom</th>
-                        <th>Lien vers prenom</th>
+                        <th>Prenom</th>
+                        <th>En cours de dev</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -26,15 +36,6 @@
             <p>Aucun Auteur trouvé.</p>
         {% endif %}
 
-        <h2 class="mt-4 text-center">Ajouter une nouvelle auteur</h2>
-        <div class="row justify-content-center">
-            <div class="col-md-6">
-                {{ form_start(formAuteur) }}
-                {{ form_row(formAuteur.nom)}}
-                {{ form_row(formAuteur.prenom) }}
-                <button type="submit" class="btn btn-primary">Ajouter</button>
-                {{ form_end(formAuteur) }}
-            </div>
-        </div>
+
     </div>
 {% endblock %}

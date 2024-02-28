@@ -25,31 +25,30 @@ class BookmarkController extends AbstractController
     #[Route("ajouter", name: "marquepage_ajouter")]
     public function ajouterMarquePage(EntityManagerInterface $entityManager): Response
     {
-        
-
+        // Récupérer tous les mots-clés de la base de données
+        $motsClesList = $entityManager->getRepository(MotsCles::class)->findAll();
+    
         for ($i = 0; $i < 25; $i++) {
             $marquePage = new MarquePage();
             $marquePage->setUrl("https://example.com");
             $marquePage->setCommentaire("Un commentaire");
             $marquePage->setDateDeCreation(new \DateTime());
-
+    
+            // Utiliser les mots-clés récupérés
             $randomMotsCles = array_slice($motsClesList, 0, rand(2, 5));
-
+    
             foreach ($randomMotsCles as $mot) {
-                $mc = new MotsCles();
-                $mc->setMots($mot);
-
-                $marquePage->addMot($mc);
-                $entityManager->persist($mc);
+                $marquePage->addMot($mot); // Utiliser addMot au lieu de setMots
             }
-
+    
             $entityManager->persist($marquePage);
         }
-
+    
         $entityManager->flush();
-
+    
         return new Response("Marque-pages ajoutés avec succès.");
     }
+    
 // Le paramètre "\d+" où "\d" signifie un caractère décimal et le "+" signifie qu'il doit apparaitre au moins une fois pour correspondre
     #[Route('detail/{id}', requirements: ["id"=>"\d+"], name: 'detail')]
     public function detail(int $id, EntityManagerInterface $entityManager): Response

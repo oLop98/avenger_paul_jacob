@@ -83,7 +83,7 @@ class MarquePage
         return $this->mots;
     }
 
-    public function addMots(MotsCles $mot): static
+    public function addMot(MotsCles $mot): static
     {
         if (!$this->mots->contains($mot)) {
             $this->mots->add($mot);

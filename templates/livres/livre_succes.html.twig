@@ -1,0 +1,11 @@
+{% extends 'base.html.twig' %}
+
+
+{% block content %}
+    <div class="container mt-4">
+        <div class="alert alert-success" role="alert">
+            Livre ajouté avec succès!👍
+        </div>
+        <a href="{{ path('app_livres') }}" class="btn btn-primary">Retour à la liste des auteurs</a>
+    </div>
+{% endblock %}

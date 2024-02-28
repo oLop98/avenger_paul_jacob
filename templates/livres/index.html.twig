@@ -1,11 +1,21 @@
+{# templates/livres/index.html.twig #}
+
 {% extends 'base.html.twig' %}
 
 {% block content %}
     <div class="container">
+        <div class="row justify-content-center">
+            <h3>Ajout de Livre</h3>
+
+            <div>
+                {{ form_start(formLivre) }}
+                {{ form_row(formLivre.titre) }}
+                {{ form_row(formLivre.auteur) }}
+                <button type="submit" class="btn btn-primary">Ajouter</button>
+                {{ form_end(formLivre) }}
+            </div>
+        </div>
         <h2>Liste des Livres</h2>
-
-
-
 
         {% if livres is not empty %}
             <table class="table">
@@ -20,7 +30,6 @@
                         <tr>
                             <td>{{ livr.titre }}</td>
                             <td><a href="{{ path('detaillivre', {'id': livr.id}) }}" class="btn btn-primary">Voir les détails</a></td>
-
                         </tr>
                     {% endfor %}
                 </tbody>
@@ -28,7 +37,7 @@
         {% else %}
             <p>Aucun Livre trouvé.</p>
         {% endif %}
-        <a href="{{ path('livre_ajouter') }}" class="btn btn-primary">Aj un Livre</a>
+
 
     </div>
 {% endblock %}
