@@ -1,0 +1,40 @@
+{% extends 'base.html.twig' %}
+
+{% block content %}
+    <div class="container mt-4">
+        {% if auteurs is not empty %}
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Prenom</th>
+                        <th>Nom</th>
+                        <th>Lien vers prenom</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for a in auteurs %}
+                    <tr>
+                        <td>{{ a.nom }}</td>
+                        <td>{{ a.prenom }}</td>
+                        <td><a href="{{ path('contenuauteurs', {'id': a.id}) }}" class="btn btn-primary">Voir les détails</a></td>
+                    </tr>
+                {% endfor %}
+                
+                </tbody>
+            </table>
+        {% else %}
+            <p>Aucun Auteur trouvé.</p>
+        {% endif %}
+
+        <h2 class="mt-4 text-center">Ajouter une nouvelle auteur</h2>
+        <div class="row justify-content-center">
+            <div class="col-md-6">
+                {{ form_start(formAuteur) }}
+                {{ form_row(formAuteur.nom)}}
+                {{ form_row(formAuteur.prenom) }}
+                <button type="submit" class="btn btn-primary">Ajouter</button>
+                {{ form_end(formAuteur) }}
+            </div>
+        </div>
+    </div>
+{% endblock %}

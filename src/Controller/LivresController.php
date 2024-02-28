@@ -2,14 +2,19 @@
 
 namespace App\Controller;
 
+use App\Form\Type\LivreType;
+
 use App\Entity\Caillou;
 use App\Entity\MarquePage;
 use App\Entity\Livres;
+
 use Doctrine\ORM\EntityManagerInterface;
 use App\Repository\LivresRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
+use Symfony\Component\HttpFoundation\Request;
+
 
 class LivresController extends AbstractController
 {
@@ -37,6 +42,28 @@ class LivresController extends AbstractController
             return new Response("Livre sauvegardé avec l'id ". $livre->getId());
         }
 
+        public function ajout(Request $request, ManagerRegistry $doctrine)
+        {
+            // Création d’un objet Livre vierge
+            $livre = new Livres();
+            $form = $this->createForm(LivreType::class, $livre);
+            $form->handleRequest($request);
+            if ($form->isSubmitted() && $form->isValid()) 
+            {
+                // $form->getData() : pour récupérer les données
+                // Les données sont déjà stockées dans la variable d’origine
+                // $livre = $form->getData();
+                // ... Effectuer le/les traitements(s) à réaliser
+                // Par exemple :
+                $entityManager = $doctrine->getManager();
+                $entityManager->persist($livre);
+                $entityManager->flush();
+                return $this->redirectToRoute('livre_succes');
+            }
+            return $this->render('livre/ajout.html.twig', ['form' => $form,]);
+        }
+        
+
         #[Route('detaillivre/{id}', requirements: ["page"=>"\d+"], name: 'detaillivre')]
         public function detail(int $id, EntityManagerInterface $entityManager): Response {
             $livre = $entityManager->getRepository(Livres::class)->find($id);
@@ -58,9 +85,9 @@ class LivresController extends AbstractController
 }
 
 #[Route('/requete', name: 'requete')]
-public function AuteurPremiereLettre(LivresRepository $LivresRepository): Response
+public function livresAuteurPremiereLettre(LivresRepository $LivresRepository): Response
 {
-    $livresA = $LivresRepository->AuteurPremiereLettre('L');
+    $livresA = $LivresRepository->livresAuteurPremiereLettre('L');
 
     return $this->render('bookmark/requete.html.twig', [
         'livresA' => $livresA,
@@ -90,7 +117,7 @@ public function totalBooks(LivresRepository $LivresRepository): Response
 #[Route('/requete', name: 'requete')]
 public function resultat(LivresRepository $LivresRepository): Response
 {
-    $livresA = $LivresRepository->AuteurPremiereLettre('L');
+    $livresA = $LivresRepository->livresAuteurPremiereLettre('L');
     $AuteurNbLivre = $LivresRepository->AuteurNbLivre();
     $totalLivres = $LivresRepository->countBooks();
 
@@ -100,4 +127,5 @@ public function resultat(LivresRepository $LivresRepository): Response
         'totalLivres' => $totalLivres,
     ]);
 }
+
 }

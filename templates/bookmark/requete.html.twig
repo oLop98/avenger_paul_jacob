@@ -1,22 +1,52 @@
 {% extends 'base.html.twig' %}
 
 {% block content %}
+    <div class="container mt-4">
+        <h1>Livres dont la première lettre commence par L</h1>
+        {% if livresA is not empty %}
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Titre</th>
+                        <th>Auteur</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for livre in livresA %}
+                        <tr>
+                            <td>{{ livre.titre }}</td>
+                            <td>{{ livre.auteur.prenom }} {{ livre.auteur.nom }}</td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        {% else %}
+            <p>Aucun livre trouvé.</p>
+        {% endif %}
 
-<h1>Livres dont la première lettre commence par L</h1>
-<ul>
-    {% for livre in livresA %}
-        <li>{{ livre.titre }} - {{ livre.auteur }}</li>
-    {% endfor %}
-</ul>
+        <h1>Auteurs ayant écrit plus de 2 livres</h1>
+        {% if AuteurNbLivre is not empty %}
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Auteur</th>
+                        <th>Nombre de livres</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for auteur in AuteurNbLivre %}
+                        <tr>
+                            <td>{{ auteur.auteur }}</td>
+                            <td><strong>{{ auteur.nombreLivres }}</strong></td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        {% else %}
+            <p>Aucun auteur trouvé.</p>
+        {% endif %}
 
-<h1>Auteurs ayant écrit plus de 3 livres</h1>
-<ul>
-    {% for auteur in AuteurNbLivre %}
-        <li>{{ auteur.auteur }} avec <strong>{{ auteur.nombreLivres }}</strong> livres</li>
-    {% endfor %}
-</ul>
-
-<h1>Nombre total de livres en base</h1>
-<p>{{ totalLivres }}</p>
-
+        <h1>Nombre total de livres en base</h1>
+        <p>{{ totalLivres }}</p>
+    </div>
 {% endblock %}

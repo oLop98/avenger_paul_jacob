@@ -50,7 +50,7 @@ class BookmarkController extends AbstractController
 
         return new Response("Marque-pages ajoutés avec succès.");
     }
-
+// Le paramètre "\d+" où "\d" signifie un caractère décimal et le "+" signifie qu'il doit apparaitre au moins une fois pour correspondre
     #[Route('detail/{id}', requirements: ["id"=>"\d+"], name: 'detail')]
     public function detail(int $id, EntityManagerInterface $entityManager): Response
     {

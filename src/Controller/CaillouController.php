@@ -2,6 +2,8 @@
 
 namespace App\Controller;
 
+use App\Entity\Auteurs;
+use App\Entity\Livres;
 use App\Entity\MarquePage;
 use App\Entity\Caillou;
 use App\Entity\Photo;

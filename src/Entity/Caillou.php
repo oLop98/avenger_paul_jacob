@@ -16,8 +16,7 @@ class Caillou
     #[ORM\Column(length: 255)]
     private ?string $nom_categorie = null;
 
-    #[ORM\Column(length: 255, nullable: true)]
-    private ?string $photo_url = null;
+
 
     public function getId(): ?int
     {
@@ -36,15 +35,5 @@ class Caillou
         return $this;
     }
 
-    public function getPhotoUrl(): ?string
-    {
-        return $this->photo_url;
-    }
 
-    public function setPhotoUrl(?string $photo_url): static
-    {
-        $this->photo_url = $photo_url;
-
-        return $this;
-    }
 }

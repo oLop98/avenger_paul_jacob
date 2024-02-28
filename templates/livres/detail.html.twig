@@ -1,15 +1,10 @@
 {% extends 'base.html.twig' %}
 
-
-
-
 {% block content %}
     <div class="container">
-        
 
         <style>
-            .table
-            {
+            .table {
                 border-width: 1px;
                 border-style: solid;
                 border-color: black;
@@ -22,8 +17,6 @@
                 width: 50%;
             }
         </style>
-
-
 
         {% if livre is not empty %}
             <table class="table">
@@ -44,9 +37,8 @@
                     </tr>
                     <tr>
                         <td>Auteur</td>
-                        <td>{{ livre.auteur}}</td>
+                        <td>{{ livre.auteur.nom }} {{ livre.auteur.prenom }}</td>
                     </tr>
-
                 </tbody>
             </table>
         {% else %}
@@ -56,5 +48,4 @@
         <a href="{{ path('livre_ajouter') }}" class="btn btn-primary">Ajouter un Livre</a>
 
     </div>
-
 {% endblock %}
