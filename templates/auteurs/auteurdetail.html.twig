@@ -1,0 +1,56 @@
+{% extends 'base.html.twig' %}
+
+{% block content %}
+    <div class="container">
+
+        <style>
+            .table {
+                border-width: 1px;
+                border-style: solid;
+                border-color: black;
+            }
+
+            td {
+                border-width: 1px;
+                border-style: solid;
+                border-color: black;
+                width: 50%;
+            }
+        </style>
+
+        {% if auteur is not empty %}
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Libellé</th>
+                        <th>Valeurs</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>id</td>
+                        <td>{{ auteur.id }}</td>
+                    </tr>
+
+                    <tr>
+                        <td>Auteur</td>
+                        <td>                
+                            {{ form_start(formModifAuteur) }}
+                            {{ form_row(formModifAuteur.nom)}}
+                            {{ form_row(formModifAuteur.prenom) }}
+
+                    </tr>
+                </tbody>
+            </table>
+        {% else %}
+            <p>Aucun Livre trouvé.</p>
+        {% endif %}
+        <div class="row ml-0">
+            <div>
+                <button type="submit" class="btn btn-primary">Modifier</button>
+                {{ form_end(formModifAuteur) }}
+            </div>
+        </div>
+        
+    </div>
+{% endblock %}

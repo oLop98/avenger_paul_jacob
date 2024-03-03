@@ -1,0 +1,17 @@
+{% extends 'base.html.twig' %}
+
+{% block content %}
+    <div class="container mt-4">
+        <h2 class="mt-4 text-center">Modifier un livre</h2>
+        <div class="row justify-content-center">
+            <div>
+                {{ form_start(formModifLivre) }}
+                {{ form_row(formModifLivre.titre) }}
+                {{ form_row(formModifLivre.AnneeParution) }}
+                {{ form_row(formModifLivre.NbPage) }}
+                <button type="submit" class="btn btn-primary">Modifier</button>
+                {{ form_end(formModifLivre) }}
+            </div>
+        </div>
+    </div>
+{% endblock %}

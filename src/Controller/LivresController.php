@@ -4,7 +4,7 @@ namespace App\Controller;
 
 use App\Form\Type\LivreType;
 use App\Form\Type\AuteurType;
-
+use App\Form\ModifLivreType;
 
 use App\Entity\Caillou;
 use App\Entity\MarquePage;
@@ -85,18 +85,6 @@ class LivresController extends AbstractController
         }
         
 
-        #[Route('detaillivre/{id}', requirements: ["page"=>"\d+"], name: 'detaillivre')]
-        public function detail(int $id, EntityManagerInterface $entityManager): Response {
-            $livre = $entityManager->getRepository(Livres::class)->find($id);
-    
-            if (!$livre) {
-                throw $this->createNotFoundException("Le livre demandé n'existe pas");
-            }
-    
-            return $this->render('livres/detail.html.twig', [
-                'livre' => $livre,
-            ]);
-        }
 
     #[Route("/livre/fiche/{id}", name: "livre_fiche", requirements: ["id" => "\d+"])]
         public function afficherLivre(int $id, EntityManagerInterface $entityManager):Response
@@ -153,5 +141,32 @@ public function resultat(LivresRepository $LivresRepository): Response
 public function auteurSucces(): Response
 {
     return $this->render('livres/livre_succes.html.twig');
+}
+
+
+
+#[Route('detaillivre/{id}', requirements: ["page"=>"\d+"], name: 'detaillivre')]
+public function modifierLivre(int $id, Request $request, EntityManagerInterface $entityManager): Response
+{
+    $livre = $entityManager->getRepository(Livres::class)->find($id);
+
+    if (!$livre) {
+        throw $this->createNotFoundException("Le livre demandé n'existe pas");
+    }
+
+    $formModifLivre = $this->createForm(ModifLivreType::class, $livre);
+
+    $formModifLivre->handleRequest($request);
+
+    if ($formModifLivre->isSubmitted() && $formModifLivre->isValid()) {
+        $entityManager->flush();
+
+        return $this->redirectToRoute('detaillivre', ['id' => $livre->getId()]);
+    }
+
+    return $this->render('livres/detail.html.twig', [
+        'livre' => $livre,
+        'formModifLivre' => $formModifLivre->createView(),
+    ]);
 }
 }

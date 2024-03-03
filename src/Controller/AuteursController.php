@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Form\ModifAuteurType;
 use App\Form\Type\AuteurType;
 use App\Form\Type\LivreType;
 use App\Entity\Auteurs;
@@ -11,6 +12,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 
+
 class AuteursController extends AbstractController
 {
     #[Route('/auteurs', name: 'app_auteurs')]
@@ -19,33 +21,45 @@ class AuteursController extends AbstractController
         $auteurs = $entityManager->getRepository(Auteurs::class)->findAll();
         $newAuteur = new Auteurs();
         $formAuteur = $this->createForm(LivreType::class, $newAuteur);
-    
+
         $formAuteur->handleRequest($request);
-    
+
         if ($formAuteur->isSubmitted() && $formAuteur->isValid()) {
             $entityManager->persist($newAuteur);
             $entityManager->flush();
-    
+
             return $this->redirectToRoute('auteur_succes', ['auteur' => $newAuteur]);
         }
-    
+
         return $this->render('auteurs/ajout.html.twig', [
             'auteurs' => $auteurs,
             'formAuteur' => $formAuteur->createView(),
         ]);
     }
-    
+
     #[Route('/contenuauteurs/{id}', requirements: ["id" => "\d+"], name: 'contenuauteurs')]
-    public function detailAuteur(int $id, EntityManagerInterface $entityManager): Response
+    public function detailAuteur(int $id, EntityManagerInterface $entityManager, Request $request): Response
     {
         $auteur = $entityManager->getRepository(Auteurs::class)->find($id);
-    
+
         if (!$auteur) {
             throw $this->createNotFoundException("L'auteur demandé n'existe pas");
         }
-    
+
+        $formModifAuteur = $this->createForm(ModifAuteurType::class, $auteur);
+
+        $formModifAuteur->handleRequest($request);
+
+        if ($formModifAuteur->isSubmitted() && $formModifAuteur->isValid()) {
+            $entityManager->flush();
+        }
+
+        $auteurs = $entityManager->getRepository(Auteurs::class)->findAll();
+
         return $this->render('auteurs/auteurdetail.html.twig', [
             'auteur' => $auteur,
+            'formModifAuteur' => $formModifAuteur->createView(),
+            'auteurs' => $auteurs,
         ]);
     }
 

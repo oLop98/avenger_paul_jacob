@@ -17,13 +17,14 @@ class AuteurType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('titre', TextType::class)
-            ->add('auteur', ChoiceType::class, [
-                'choices' => $options['auteurs'],
-                'choice_label' => function ($auteur) {
-                    return $auteur->getNom();
-                },
-            ]);
+        ->add('titre', TextType::class)
+        ->add('auteur', ChoiceType::class, [
+            'choices' => $options['auteurs'],
+            'choice_label' => function ($auteur) {
+                return $auteur->getPrenom() . ' ' . $auteur->getNom();
+            },
+        ]);
+    
     }
 
     public function configureOptions(OptionsResolver $resolver)

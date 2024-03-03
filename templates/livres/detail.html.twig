@@ -19,33 +19,42 @@
         </style>
 
         {% if livre is not empty %}
-            <table class="table">
-                <thead>
-                    <tr>
-                        <th>Libellé</th>
-                        <th>Valeurs</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td>id</td>
-                        <td>{{ livre.id }}</td>
-                    </tr>
-                    <tr>
-                        <td>Titre</td>
-                        <td>{{ livre.titre }}</td>
-                    </tr>
-                    <tr>
-                        <td>Auteur</td>
-                        <td>{{ livre.auteur.nom }} {{ livre.auteur.prenom }}</td>
-                    </tr>
-                </tbody>
-            </table>
+            <form method="post" action="{{ path('detaillivre', {'id': livre.id}) }}">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>Libellé</th>
+                            <th>Valeurs</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>id</td>
+                            <td>{{ livre.id }}</td>
+                        </tr>
+                        <tr>
+                            <td>Auteur</td>
+                            <td>{{ livre.auteur.nom }} {{ livre.auteur.prenom }}</td>
+                        </tr>
+                        <tr>
+                            <td>Informations</td>
+                            <td>
+                                {{ form_start(formModifLivre) }}
+                            {{ form_row(formModifLivre.titre) }}{{ form_row(formModifLivre.NbPage) }}{{ form_row(formModifLivre.AnneeParution) }}
+                            {{ form_end(formModifLivre) }}
+                        </td>
+                        </tr>
+                    </tbody>
+                </table>
+                <div class="row ml-0">
+                    <div>
+                        <button type="submit" class="btn btn-primary">Modifier</button>
+                    </div>
+                </div>
+            </form>
         {% else %}
             <p>Aucun Livre trouvé.</p>
         {% endif %}
-        
-        <a href="{{ path('livre_ajouter') }}" class="btn btn-primary">Ajouter un Livre</a>
-
+    
     </div>
 {% endblock %}

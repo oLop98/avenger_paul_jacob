@@ -29,7 +29,7 @@
                     {% for livr in livres %}
                         <tr>
                             <td>{{ livr.titre }}</td>
-                            <td><a href="{{ path('detaillivre', {'id': livr.id}) }}" class="btn btn-primary">Voir les détails</a></td>
+                            <td><a href="{{ path('detaillivre', {'id': livr.id}) }}" class="btn btn-primary">Détails</a><td>
                         </tr>
                     {% endfor %}
                 </tbody>
